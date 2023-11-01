@@ -10,4 +10,7 @@ public class ClearApplicationRequest {
     public ClearApplicationRequest() {
 
     }
+    public ClearApplicationRequest(String dummy) {
+
+    }
 }

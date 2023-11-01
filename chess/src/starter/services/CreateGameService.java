@@ -1,5 +1,7 @@
 package services;
 
+import database.Database;
+
 /**
  * CreateGameService - Creates a new game.
  */
@@ -9,7 +11,7 @@ public class CreateGameService {
      * @param request information for created game
      * @return success or fail response from game creation attempt
      */
-    public CreateGameResponse createGame(CreateGameRequest request) {
+    public CreateGameResponse createGame(CreateGameRequest request, Database database) {
         return null;
     }
 

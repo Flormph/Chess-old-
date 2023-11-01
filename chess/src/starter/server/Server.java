@@ -1,6 +1,10 @@
 package server;
 
 import database.Database;
+import handlers.ClearApplicationHandler;
+import services.ClearApplicationResponse;
+import services.ClearApplicationRequest;
+import services.ClearApplicationService;
 
 /**
  * Server - handles the communication and handlers between client and database
@@ -12,8 +16,9 @@ public class Server {
         database = new Database();
     }
 
-    public boolean clear() {
-        return database.clearApplication();
+    public String clear(String requestJson) {
+        ClearApplicationHandler handler = new ClearApplicationHandler();
+        return handler.sendRequest(requestJson, database);
     }
 
     public boolean isEmpty() {

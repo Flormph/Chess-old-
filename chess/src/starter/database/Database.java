@@ -111,4 +111,8 @@ public class Database {
         }
     }
 
+    public boolean isEmpty(){
+        return games.isEmpty() && users.isEmpty() && tokens.isEmpty();
+    }
+
 }
