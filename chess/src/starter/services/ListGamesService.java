@@ -1,5 +1,7 @@
 package services;
 
+import database.Database;
+
 /**
  * ListGamesService - Gives a list of all games.
  */
@@ -9,7 +11,12 @@ public class ListGamesService {
      * @param request authorization to be checked before returning list
      * @return success or fail case of attempt
      */
-    public ListGamesResponse listGames(ListGamesRequest request) {
-        return null;
+    public ListGamesResponse listGames(ListGamesRequest request, Database database) {
+        if(database.gamesIsEmpty()) {
+            return new ListGamesResponse("Error: games list is empty");
+        }
+        else {
+            return new ListGamesResponse(database.getGames());
+        }
     }
 }

@@ -21,9 +21,10 @@ public class Game {
     /**
      * Constructor - constructs with a game name
      * @param gName game name
+     * @param gameID game ID generated in service class
      */
-    public Game(String gName) {
-        gameID = -1; //TODO make this get generated or something. Not actually necessary for this phase of the project
+    public Game(String gName, int gameID) {
+        this.gameID = gameID; //TODO make this get generated or something. Not actually necessary for this phase of the project
         whiteUsername = null;
         blackUsername = null;
         gameName = gName;

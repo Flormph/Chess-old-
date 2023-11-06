@@ -2,16 +2,18 @@ package database;
 
 import chess.ChessGameImp;
 import models.AuthToken;
+import models.Game;
 import models.User;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 /**
  * Database - a temporary class to function in place of a remote server for phase 3 of the chess project. It stores the games, users, and other information.
  */
 public class Database {
-    HashMap<String, ChessGameImp> games;
+    HashMap<String, Game> games;
     HashMap<String, User> users;
     HashSet<AuthToken> tokens;
 
@@ -22,7 +24,7 @@ public class Database {
         return games.isEmpty() && users.isEmpty() && tokens.isEmpty();
     }
 
-    public boolean addGame(String gameName, ChessGameImp game) {
+    public boolean addGame(String gameName, Game game) {
         if(games.containsKey(gameName)) {
             //todo add logic for add game
             return false;
@@ -109,6 +111,27 @@ public class Database {
             tokens.clear();
             return true;
         }
+    }
+
+    public boolean containsGame(String gameName) {
+        return games.containsKey(gameName);
+    }
+
+    public int getGameID() {
+        UUID id = UUID.randomUUID();
+        String str = "" + id;
+        int myID = str.hashCode();
+        String filterStr = "" + myID;
+        str = filterStr.replaceAll("-", "");
+        return Integer.parseInt(str);
+    }
+
+    public boolean gamesIsEmpty() {
+        return games.isEmpty();
+    }
+
+    public HashMap<String, ChessGameImp> getGames() {
+        return games;
     }
 
     public boolean isEmpty(){
