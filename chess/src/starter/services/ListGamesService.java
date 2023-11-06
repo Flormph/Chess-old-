@@ -1,6 +1,10 @@
 package services;
 
 import database.Database;
+import models.Game;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * ListGamesService - Gives a list of all games.
@@ -16,7 +20,8 @@ public class ListGamesService {
             return new ListGamesResponse("Error: games list is empty");
         }
         else {
-            return new ListGamesResponse(database.getGames());
+            Collection<Game> values = database.getGames().values();
+            return new ListGamesResponse(new ArrayList<Game>(values));
         }
     }
 }

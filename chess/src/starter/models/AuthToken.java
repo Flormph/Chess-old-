@@ -24,5 +24,8 @@ public class AuthToken {
         this.username = username;
         this.authToken = UUID.randomUUID().toString();
     }
+    public String getUsername() {
+        return username;
+    }
 }
 

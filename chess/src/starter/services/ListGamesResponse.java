@@ -22,15 +22,8 @@ public class ListGamesResponse extends Response {
      * Constructor - Success case which updates the game list
      * @param games list of games
      */
-    public ListGamesResponse(HashMap<String, Game> games) {
-
-        for(Map.Entry<String, Game> g: games.entrySet()) {
-            Game value = g.getValue();
-            if(this.games == null) {
-                this.games = new ArrayList<Game>();
-            }
-            this.games.add(value);
-        }
+    public ListGamesResponse(ArrayList<Game> games) {
+        this.games = games;
     }
 
     /**

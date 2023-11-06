@@ -130,8 +130,30 @@ public class Database {
         return games.isEmpty();
     }
 
-    public HashMap<String, ChessGameImp> getGames() {
+    public boolean usersContains(String username) {
+        return users.containsKey(username);
+    }
+
+    public HashMap<String, Game> getGames() {
         return games;
+    }
+
+    public User getUser(String username) {
+        return users.get(username);
+    }
+
+    public void generateToken(String username) {
+        users.get(username).generateToken();
+    }
+
+    public boolean hasToken(AuthToken token) {
+        return tokens.contains(token);
+    }
+
+    public void nullifyToken(String username) {
+        if(users.containsKey(username)) {
+            users.get(username).nullifyToken();
+        }
     }
 
     public boolean isEmpty(){

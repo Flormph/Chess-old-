@@ -12,6 +12,7 @@ public class User {
         username = null;
         password = null;
         email = null;
+        AuthToken token = null;
     }
 
     /**
@@ -24,6 +25,7 @@ public class User {
         username = name;
         this.password = password;
         this.email = email;
+        AuthToken token = new AuthToken(username);
     }
     /**
      * username - name of the user
@@ -37,6 +39,7 @@ public class User {
      * email - user contace email
      */
     private String email; //user email
+    private AuthToken token;
     public void setUsername() {
         return;
     }
@@ -47,12 +50,15 @@ public class User {
         return;
     }
     public String getUsername() {
-        return null;
+        return username;
     }
     public String getPassword() {
-        return null;
+        return password;
     }
     public String getEmail() {
-        return null;
+        return email;
     }
+    public AuthToken getToken() {return token;};
+    public void generateToken() {token = new AuthToken(username);}
+    public void nullifyToken() {token = null;}
 }
