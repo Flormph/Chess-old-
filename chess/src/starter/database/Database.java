@@ -14,6 +14,7 @@ import java.util.UUID;
  */
 public class Database {
     HashMap<String, Game> games;
+    public HashMap<Integer, String> gameIDs;
     HashMap<String, User> users;
     HashSet<AuthToken> tokens;
 
@@ -30,6 +31,7 @@ public class Database {
             return false;
         }
         games.put(gameName, game);
+        gameIDs.put(game.getGameID(), gameName);
         return true;
     }
 
@@ -124,6 +126,14 @@ public class Database {
         String filterStr = "" + myID;
         str = filterStr.replaceAll("-", "");
         return Integer.parseInt(str);
+    }
+
+    public Game gameFromID(int id) {
+        return games.get(gameIDs.get(id));
+    }
+
+    public String getNameFromID(int id) {
+        return gameIDs.get(id);
     }
 
     public boolean gamesIsEmpty() {

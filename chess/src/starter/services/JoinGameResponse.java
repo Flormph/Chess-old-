@@ -11,4 +11,5 @@ public class JoinGameResponse extends Response{
     JoinGameResponse(String errorMessage) {
         super(errorMessage);
     }
+    JoinGameResponse() {super();};
 }

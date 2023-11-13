@@ -32,29 +32,30 @@ public class Game {
     }
 
     public String getWhiteUsername() {
-        return null;
+        return whiteUsername;
     }
     public String getBlackUsername() {
-        return null;
+        return blackUsername;
     }
     public String getGameName() {
-        return null;
+        return gameName;
     }
     public ChessGameImp getGame() {
-        return null;
+        return game;
     }
-    public void setWhiteUsername() {
-        return;
+    public void setWhiteUsername(String username) {
+        this.whiteUsername = username;
     }
-    public void setBlackUsername() {
-
+    public void setBlackUsername(String blackUsername) {
+        this.blackUsername = blackUsername;
     }
-    public void setGameName() {
-        return;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
     public void setGame() {
         return;
     }
+    public int getGameID() {return gameID;}
 
     /**
      * gameID - int identifier for the game

@@ -19,9 +19,11 @@ public class LogoutService {
             if(!database.usersContains(request.token.getUsername())) {
                 return new LogoutResponse("Error: token found but user not found");
             }
-            database.nullifyToken(request.token.getUsername());
-            database.deleteAuthToken(request.token);
-            return new LogoutResponse();
+            else {
+                database.nullifyToken(request.token.getUsername());
+                database.deleteAuthToken(request.token);
+                return new LogoutResponse();
+            }
         }
     }
 }
