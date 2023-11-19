@@ -14,9 +14,17 @@ import java.util.UUID;
  */
 public class Database {
     HashMap<String, Game> games;
-    public HashMap<Integer, String> gameIDs;
-    HashMap<String, User> users;
-    HashSet<AuthToken> tokens;
+    public static HashMap<Integer, String> gameIDs;
+    public static HashMap<String, User> users;
+    public static HashSet<AuthToken> tokens;
+    public static Database database;
+
+    public static Database getInstance() {
+        if(database == null) {
+            database = new Database();
+        }
+        return database;
+    }
 
     public boolean clearApplication() {
         deleteAllGames();
