@@ -1,4 +1,4 @@
-package services;
+package responses;
 
 /**
  * CreateGameResponse - extends Response; stores response cases for CreateGameService

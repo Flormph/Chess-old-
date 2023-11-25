@@ -1,28 +1,33 @@
 package handlers;
 
 import com.google.gson.Gson;
+import dataAccess.DataAccessException;
 import database.Database;
-import services.CreateGameRequest;
-import services.CreateGameResponse;
+import requests.CreateGameRequest;
+import responses.CreateGameResponse;
 import services.CreateGameService;
+import spark.Request;
+import spark.Response;
 
 /**
  * ClearApplicationHandler - handles the json translation for the clear application service
  */
 public class CreateGameHandler extends Handler{
-
-    public CreateGameHandler(String Json) {
-        super(Json);
-    }
-
-    public String sendRequest(Database database) {
-        var serializer = new Gson();
-        CreateGameService service = new CreateGameService();
-        return returnResult(service.createGame(serializer.fromJson(Json, CreateGameRequest.class), database));
-    }
-
-    public String returnResult(CreateGameResponse result) {
-        var serializer = new Gson();
-        return serializer.toJson(result);
+    public String Handler(Request Srequest, Response Sresponse) {
+        CreateGameRequest request = serializer.fromJson(Srequest.body(), CreateGameRequest.class);
+        CreateGameResponse response = null;
+        try {
+            CreateGameService service = new CreateGameService();
+            response = service.createGame(request);
+        } catch(DataAccessException e) {
+            //TODO A FLIP OR NOT TODO A FLIP (MAKE RESPONSE OBJECT FOR FAILURE
+            response = new CreateGameResponse(e.getMessage());
+            Sresponse.body(serializer.toJson(response));
+            Sresponse.status(e.getCode());
+            return Sresponse.body();
+        }
+        Sresponse.body(serializer.toJson(response));
+        Sresponse.status(200);
+        return Sresponse.body();
     }
 }

@@ -1,12 +1,8 @@
-package services;
+package responses;
 
-import chess.ChessGame;
-import chess.ChessGameImp;
 import models.Game;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * ListGamesResponse - stores responses for ListGamesService

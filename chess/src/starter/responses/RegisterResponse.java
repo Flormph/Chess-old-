@@ -1,4 +1,4 @@
-package services;
+package responses;
 
 import models.AuthToken;
 
@@ -10,11 +10,11 @@ public class RegisterResponse extends Response{
     /**
      * userName - name for the new user
      */
-    String userName;
+    public String userName;
     /**
      * authToken - AuthToken provided for the session
      */
-    AuthToken authToken;
+    public AuthToken authToken;
 
     /**
      * Constructor - success case sets username and token

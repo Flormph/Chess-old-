@@ -1,8 +1,8 @@
 package handlers;
 
+import com.google.gson.Gson;
+
 public class Handler {
-    String Json;
-    Handler(String Json) {
-        this.Json = Json;
-    }
+    Gson serializer = new Gson();
+
 }

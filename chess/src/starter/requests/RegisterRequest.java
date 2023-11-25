@@ -1,21 +1,21 @@
-package services;
+package requests;
 
 /**
  * RegisterRequest - stores request information for RegisterService
  */
-public class RegisterRequest {
+public class RegisterRequest extends Request{
     /**
      * username - name to be assigned to new user
      */
-    String username;
+    public String username;
     /**
      * password - password to be assigned to new user
      */
-    String password;
+    public String password;
     /**
      * email - email to be assigned to new user
      */
-    String email;
+    public String email;
 
     /**
      * Constructor - sets username, password, and email.

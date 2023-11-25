@@ -1,4 +1,4 @@
-package services;
+package responses;
 
 /**
  * LogoutResponse - Stores Responses for LogoutService

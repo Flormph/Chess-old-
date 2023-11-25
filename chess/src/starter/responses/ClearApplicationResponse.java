@@ -1,6 +1,4 @@
-package services;
-
-import handlers.ClearApplicationHandler;
+package responses;
 
 /**
  * ClearApplicationResponse - stores possible responses for ClearApplication

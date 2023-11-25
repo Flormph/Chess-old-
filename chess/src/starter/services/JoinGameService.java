@@ -3,26 +3,34 @@ package services;
 import dataAccess.DataAccessException;
 import database.Database;
 import models.Game;
+import requests.JoinGameRequest;
+import responses.JoinGameResponse;
 
 import java.util.Objects;
 
 /**
  * JoinGameService - Verifies that the specified game exists, and, if a color is specified, adds the caller as the requested color to the game. If no color is specified the user is joined as an observer. This request is idempotent.
  */
-public class JoinGameService {
+public class JoinGameService extends Service{
     /**
      * joinGame - attempts to join game with given request and returns response
      * @param request information for which game to join
      * @return success or fail case of attempt
      */
-    public JoinGameResponse joinGame(JoinGameRequest request, Database database) throws DataAccessException {
+    public JoinGameResponse joinGame(JoinGameRequest request) throws DataAccessException {
+        if(!database.hasToken(request.token)) { //incorrect authtoken
+            throw new DataAccessException("Error: unauthorized", 401);
+        }
+        if(request.playerColor != "WHITE" && request.playerColor != "BLACK") {
+            throw new DataAccessException("Error: bad request", 400);
+        }
         if(database.gameIDs.containsKey(request.gameID)) {
-            return new JoinGameResponse("Error: game doesn't exist");
+            throw new DataAccessException("Error: game doesn't exist", 500);
         }
         Game game = database.gameFromID(request.gameID);
         if(Objects.equals(request.playerColor, "WHITE")) {
             if(!database.containsGame(game.getGameName())) {
-                return new JoinGameResponse("Error: game doesn't exist");
+                throw new DataAccessException("Error: game doesn't exist", 500);
             }
             else {
                 if(Objects.equals(game.getWhiteUsername(), "NOWHITE")) {
@@ -30,13 +38,13 @@ public class JoinGameService {
                     return new JoinGameResponse();
                 }
                 else {
-                    return new JoinGameResponse("Error: already taken");
+                    throw new DataAccessException("Error: already taken", 403);
                 }
             }
         }
         if(Objects.equals(request.playerColor, "BLACK")) {
             if(!database.containsGame(database.getNameFromID(request.gameID))) {
-                return new JoinGameResponse("Error: game doesn't exist");
+                throw new DataAccessException("Error: game doesn't exist", 500);
             }
             else {
                 if(Objects.equals(game.getBlackUsername(), "NOBLACK")) {
@@ -44,7 +52,7 @@ public class JoinGameService {
                     return new JoinGameResponse();
                 }
                 else {
-                    return new JoinGameResponse("Error: already taken");
+                    throw new DataAccessException("Error: already taken", 403);
                 }
             }
         }

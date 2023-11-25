@@ -1,17 +1,17 @@
-package services;
+package requests;
 
 /**
  * LoginRequest - stores request information for LoginService
  */
-public class LoginRequest {
+public class LoginRequest extends Request{
     /**
      * username = login user's username
      */
-    String username;
+    public String username;
     /**
      * password = login user's password
      */
-    String password;
+    public String password;
 
     /**
      * Constructor - sets username and password

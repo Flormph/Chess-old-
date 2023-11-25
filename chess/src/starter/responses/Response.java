@@ -1,4 +1,4 @@
-package services;
+package responses;
 
 /**
  * Response - Parent class for all responses

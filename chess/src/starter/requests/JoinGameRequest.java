@@ -1,4 +1,4 @@
-package services;
+package requests;
 
 import models.AuthToken;
 
@@ -6,7 +6,7 @@ import models.AuthToken;
  * JoinGameRequest - stores request information for JoinGameService
  */
 
-public class JoinGameRequest {
+public class JoinGameRequest extends Request{
     /**
      * playerColor - team color player intends to join (must be "BLACK" or "WHITE")
      */

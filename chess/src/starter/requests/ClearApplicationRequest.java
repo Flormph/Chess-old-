@@ -1,9 +1,9 @@
-package services;
+package requests;
 
 /**
  * ClearApplicationRequest - class to store request for ClearApplicationService
  */
-public class ClearApplicationRequest {
+public class ClearApplicationRequest extends Request {
     /**
      * ClearApplicationRequest - this is a dummy class used for code consistency
      */
