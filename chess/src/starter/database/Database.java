@@ -5,18 +5,15 @@ import models.AuthToken;
 import models.Game;
 import models.User;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Database - a temporary class to function in place of a remote server for phase 3 of the chess project. It stores the games, users, and other information.
  */
 public class Database {
-    HashMap<String, Game> games;
-    public static HashMap<Integer, String> gameIDs;
-    public static HashMap<String, User> users;
-    public static HashSet<AuthToken> tokens;
+    public static ArrayList<Game> games;
+    public static ArrayList<User> users;
+    public static Map<String, AuthToken> tokens;
     public static Database database;
 
     public static Database getInstance() {
@@ -24,6 +21,18 @@ public class Database {
             database = new Database();
         }
         return database;
+    }
+
+    public Database() {
+        if(games == null) {
+            games = new ArrayList<Game>();
+        }
+        if(users == null) {
+            users = new ArrayList<User>();
+        }
+        if(tokens == null) {
+            tokens = new HashMap<String, AuthToken>();
+        }
     }
 
     public boolean clearApplication() {
@@ -34,78 +43,70 @@ public class Database {
     }
 
     public boolean addGame(String gameName, Game game) {
-        if(games.containsKey(gameName)) {
-            //todo add logic for add game
-            return false;
+        for(Game g: games) {
+            if(Objects.equals(g.getGameName(), gameName)) {
+                //todo add logic for add game
+                return false;
+            }
         }
-        games.put(gameName, game);
-        gameIDs.put(game.getGameID(), gameName);
+
+        games.add(game);
         return true;
     }
 
     public boolean deleteGame(String gameName) {
-        if(games.containsKey(gameName)) {
-            games.remove(gameName);
-            return true;
+        for(Game g: games) {
+            if(Objects.equals(g.getGameName(), gameName)) {
+                games.remove(g);
+                return true;
+            }
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     public boolean deleteAllGames() {
-        if(games.isEmpty()) {
-            return false;
-        }
-        else {
-            games.clear();
-            return true;
-        }
+        games.clear();
+        return true;
     }
 
     public boolean addUser(User user) {
-        if(users.containsKey(user.getUsername())) {
-            return false;
+        for(User u: users) {
+            if (Objects.equals(u.getUsername(), user.getUsername())) {
+                return false;
+            }
         }
-        else {
-            users.put(user.getUsername(), user);
-            return true;
-        }
+        users.add(user);
+        return true;
     }
 
     public boolean deleteUser(String userName) {
-        if(users.containsKey(userName)) {
-            users.remove(userName);
-            return true;
+        for(User u: users) {
+            if (Objects.equals(u.getUsername(), userName)) {
+                users.remove(u);
+                return true;
+            }
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     public boolean deleteAllUsers() {
-        if(users.isEmpty()) {
+        users.clear();
+        return true;
+    }
+
+    public boolean addAuthToken(String userName, AuthToken token) {
+        if(tokens.containsValue(token)) {
             return false;
         }
         else {
-            users.clear();
+            tokens.put(userName, token);
             return true;
         }
     }
 
-    public boolean addAuthToken(AuthToken token) {
-        if(tokens.contains(token)) {
-            return false;
-        }
-        else {
-            tokens.add(token);
-            return true;
-        }
-    }
-
-    public boolean deleteAuthToken(AuthToken token) {
-        if(tokens.contains(token)) {
-            tokens.remove(token);
+    public boolean deleteAuthToken(String userName, AuthToken token) {
+        if(tokens.containsValue(token)) {
+            tokens.remove(userName, token);
             return true;
         }
         else {
@@ -114,17 +115,17 @@ public class Database {
     }
 
     public boolean deleteAllAuthTokens() {
-        if(tokens.isEmpty()) {
-            return false;
-        }
-        else {
-            tokens.clear();
-            return true;
-        }
+        tokens.clear();
+        return true;
     }
 
     public boolean containsGame(String gameName) {
-        return games.containsKey(gameName);
+        for(Game g: games) {
+            if(Objects.equals(g.getGameName(), gameName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getGameID() {
@@ -137,45 +138,105 @@ public class Database {
     }
 
     public Game gameFromID(int id) {
-        return games.get(gameIDs.get(id));
+        for(Game g: games) {
+            if(g.getGameID() == id) {
+                return g;
+            }
+        }
+        return null;
     }
 
     public String getNameFromID(int id) {
-        return gameIDs.get(id);
+        for(Game g: games) {
+            if(g.getGameID() == id) {
+                return g.getGameName();
+            }
+        }
+        return null;
     }
 
     public boolean gamesIsEmpty() {
         return games.isEmpty();
     }
 
-    public boolean usersContains(String username) {
-        return users.containsKey(username);
-    }
-
-    public HashMap<String, Game> getGames() {
+    public ArrayList<Game> getGames() {
         return games;
     }
 
+    public boolean usersContains(String username) {
+        for(User u: users) {
+            if(Objects.equals(u.getUsername(), username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public User getUser(String username) {
-        return users.get(username);
+        for(User u: users) {
+            if(Objects.equals(u.getUsername(), username)) {
+                return u;
+            }
+        }
+        return null;
     }
 
     public void generateToken(String username) {
-        users.get(username).generateToken();
+        this.getUser(username).generateToken();
     }
 
-    public boolean hasToken(AuthToken token) {
-        return tokens.contains(token);
+    public boolean tokensContains(AuthToken token) {
+        for(AuthToken t: tokens.values()) {
+            if(Objects.equals(t.getAuthToken(), token.getAuthToken())) return true;
+        }
+        return false;
     }
 
     public void nullifyToken(String username) {
-        if(users.containsKey(username)) {
-            users.get(username).nullifyToken();
+        if (this.usersContains(username)) {
+            tokens.remove(username);
         }
     }
 
     public boolean isEmpty(){
         return games.isEmpty() && users.isEmpty() && tokens.isEmpty();
+    }
+    public String printApplication() {
+        return this.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Users:");
+        sb.append('\n');
+        for(User u: users) {
+            sb.append(u.toString());
+            sb.append('\n');
+        }
+
+        sb.append("Games:");
+        sb.append('\n');
+        for(Game g: games) {
+            sb.append(g.toString());
+            sb.append('\n');
+        }
+
+        sb.append("Tokens:");
+        sb.append('\n');
+        for(String t: tokens.keySet()) {
+            sb.append('\t');
+            sb.append("Username:");
+            sb.append(t);
+            sb.append('\n');
+            sb.append('\t');
+            sb.append("Token:");
+            sb.append(tokens.get(t).toString());
+            sb.append('\n');
+        }
+
+        return sb.toString();
     }
 //todo add a to string method for debugging purposes
 }

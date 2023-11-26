@@ -77,4 +77,24 @@ public class Game {
      * game - ChessGame implementation
      */
     private ChessGameImp game;
+    @Override
+    public String toString() {
+        return "Game name:" +
+                gameName +
+                '\n' +
+                "Game ID:" +
+                gameID +
+                '\n' +
+                "White User:" +
+                whiteUsername +
+                '\n' +
+                "Black User:" +
+                blackUsername +
+                '\n' +
+                "Current board:" +
+                game.getBoard().toString() +
+                '\n' +
+                "------------" +
+                '\n';
+    }
 }

@@ -19,14 +19,14 @@ public class ListGamesService extends Service{
      * @return success or fail case of attempt
      */
     public ListGamesResponse listGames(ListGamesRequest request) throws DataAccessException {
-        if(!database.hasToken(request.token)) { //incorrect authtoken
+        if(!database.tokensContains(request.token)) { //incorrect authtoken
             throw new DataAccessException("Error: unauthorized", 401);
         }
         if(database.gamesIsEmpty()) {
             throw new DataAccessException("Error: games list is empty", 500);
         }
         else {
-            Collection<Game> values = database.getGames().values();
+            Collection<Game> values = database.getGames();
             return new ListGamesResponse(new ArrayList<Game>(values));
         }
     }

@@ -44,5 +44,10 @@ public class Main {
             JoinGameHandler handler = new JoinGameHandler();
             return handler.Handler(request,response);
         });
+
+        Spark.get("/db", (request, response) -> {
+            PrintApplicationHandler handler = new PrintApplicationHandler();
+            return handler.Handler(request,response);
+        });
     }
 }

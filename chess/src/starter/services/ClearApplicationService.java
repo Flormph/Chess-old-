@@ -15,12 +15,7 @@ public class ClearApplicationService extends Service{
      * @return ClearApplicationResponse return of either success or failure
      */
     public ClearApplicationResponse clearApplication(ClearApplicationRequest request) throws DataAccessException {
-        if(!database.isEmpty()) {
-            database.clearApplication();
-            return new ClearApplicationResponse();
-        }
-        else {
-            throw new DataAccessException("Error: database already empty", 500);
-        }
+        database.clearApplication();
+        return new ClearApplicationResponse();
     }
 }

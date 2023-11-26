@@ -25,7 +25,7 @@ public class LoginService extends Service{
         }
         if(Objects.equals(database.getUser(request.username).getPassword(), request.password)) { //successful login
             database.generateToken(request.username);
-            database.addAuthToken(database.getUser(request.username).getToken());
+            database.addAuthToken(request.username, database.getUser(request.username).getToken());
             return new LoginResponse(database.getUser(request.username).getUsername(),database.getUser(request.username).getToken());
         }
         return null;

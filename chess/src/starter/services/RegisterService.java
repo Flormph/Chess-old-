@@ -19,7 +19,7 @@ public class RegisterService extends Service{
         if(request.username == null || request.username.isEmpty() || request.email == null || request.email.isEmpty() || request.password == null || request.password.isEmpty()) {
             throw new DataAccessException("Error: bad request", 400);
         }
-        else if(database.usersContains(request.username)) {
+        else if(database.users.isEmpty() || database.usersContains(request.username)) {
             throw new DataAccessException("Error: already taken", 403);
         }
         else {

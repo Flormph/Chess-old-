@@ -15,7 +15,7 @@ public class LogoutService extends Service{
      * @return success or fail response for the attempt
      */
     public LogoutResponse logout(LogoutRequest request) throws DataAccessException {
-        if(!database.hasToken(request.token)) { //incorrect authtoken
+        if(!database.tokensContains(request.token)) { //incorrect authtoken
            throw new DataAccessException("Error: unauthorized", 401);
         }
         else {
@@ -24,7 +24,7 @@ public class LogoutService extends Service{
             }
             else { //successful logout
                 database.nullifyToken(request.token.getUsername());
-                database.deleteAuthToken(request.token);
+                database.deleteAuthToken(request.token.getUsername(), request.token);
                 return new LogoutResponse();
             }
         }

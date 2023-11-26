@@ -27,5 +27,19 @@ public class AuthToken {
     public String getUsername() {
         return username;
     }
+    public String getAuthToken() {
+        return authToken;
+    }
+    @Override
+    public String toString() {
+        return "Username:" +
+                username +
+                '\n' +
+                "Token:" +
+                authToken +
+                '\n' +
+                "------------" +
+                '\n';
+    }
 }
 

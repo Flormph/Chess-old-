@@ -16,7 +16,7 @@ public class CreateGameService extends Service{
      * @return success or fail response from game creation attempt
      */
     public CreateGameResponse createGame(CreateGameRequest request) throws DataAccessException {
-        if(!database.hasToken(request.token)) { //incorrect authtoken
+        if(!database.tokensContains(request.token)) { //incorrect authtoken
             throw new DataAccessException("Error: unauthorized", 401);
         }
         if(request.gameName == null || request.gameName.isEmpty()){

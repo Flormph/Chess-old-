@@ -61,4 +61,18 @@ public class User {
     public AuthToken getToken() {return token;};
     public void generateToken() {token = new AuthToken(username);}
     public void nullifyToken() {token = null;}
+    @Override
+    public String toString() {
+        return "Username:" +
+                username +
+                '\n' +
+                "Password" +
+                password +
+                '\n' +
+                "Email:" +
+                email +
+                '\n' +
+                "-----------" +
+                '\n';
+    }
 }

@@ -18,13 +18,13 @@ public class JoinGameService extends Service{
      * @return success or fail case of attempt
      */
     public JoinGameResponse joinGame(JoinGameRequest request) throws DataAccessException {
-        if(!database.hasToken(request.token)) { //incorrect authtoken
+        if(!database.tokensContains(request.token)) { //incorrect authtoken
             throw new DataAccessException("Error: unauthorized", 401);
         }
-        if(request.playerColor != "WHITE" && request.playerColor != "BLACK") {
+        if(!Objects.equals(request.playerColor, "WHITE") && !Objects.equals(request.playerColor, "BLACK")) {
             throw new DataAccessException("Error: bad request", 400);
         }
-        if(database.gameIDs.containsKey(request.gameID)) {
+        if(!database.containsGame(database.getNameFromID(request.gameID))) {
             throw new DataAccessException("Error: game doesn't exist", 500);
         }
         Game game = database.gameFromID(request.gameID);
